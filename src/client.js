@@ -8,9 +8,13 @@ if(args.length!=3){
 const [ip, port, numberOfRequests] = process.argv.slice(2);
 
 
-let address= 'http://'.concat(ip).concat(':').concat(port).concat('/');
+let address= 'https://'.concat(ip).concat(':').concat(port).concat('/');
 console.log("Address ",address);
-const client = http2.connect(address );
+const client = http2.connect(address,{
+  
+  rejectUnauthorized: false,
+
+} );
 
 for (let i = 0; i < numberOfRequests; i++) {
   const req = client.request({ ':path': '/' });
@@ -18,10 +22,16 @@ for (let i = 0; i < numberOfRequests; i++) {
   req.on('response', (headers, flags) => {
     console.log(headers[':status']);
   });
-
+let data='';
   req.on('data', (chunk) => {
+    data += chunk;
     console.log("Data Received");
   });
 
+  req.on('end', () => {
+    client.close();
+  });
+  
   req.end();
+  
 }
