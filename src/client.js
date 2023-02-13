@@ -6,6 +6,7 @@ const Http2Flooding=require('./http2flooding')
 function main(){
   const args = process.argv.slice(2);
   if(args.length!=4){
+    console.log(args)
     console.log("Insert ip - port - number of requests - http method");
     process.exit(1);
   }
