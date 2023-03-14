@@ -32,11 +32,8 @@ class Http2Flooding {
  * 
  */
     connectToServer(){
-      let address= 'https://'.concat(this.ip).concat(':').concat(this.port).concat('/');
-      const client = http2.connect(address,{
-        requestCert: false, // put true if you want a client certificate, tested and it works
-        rejectUnauthorized: false
-        });
+      let address= 'http://'.concat(this.ip).concat(':').concat(this.port).concat('/');
+      const client = http2.connect(address);
         return client;
     }
 
